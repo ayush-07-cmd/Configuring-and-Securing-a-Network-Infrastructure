@@ -1,0 +1,74 @@
+Project Title: Configuring and Securing a Network Infrastructure
+Submitted by: Ayush Kumar Sharma
+
+System Requirements
+Operating System: Ubuntu/Linux (recommended), or use simulation tools for Cisco devices.
+
+Tools Required:
+iptables
+curl
+iftop
+Netdata
+Optional: Cisco Packet Tracer (for router simulation)
+Privileges: Requires sudo access
+
+Project Execution Steps
+Step 1: Update System and Install Required Tools
+sudo apt update && sudo apt install iptables curl iftop net-tools -y
+
+
+Step 2: Simulate Router Configuration
+Open router_config.txt
+
+This file contains a sample Cisco router configuration:
+IP addressing
+NAT setup
+OSPF routing
+If using Cisco Packet Tracer:
+Import this config into a router node
+Observe routing and NAT functionality
+If using a real router:
+Connect via console and manually apply the commands
+
+
+Step 3: Apply Firewall Rules (Linux iptables)
+Open a terminal
+Run the following commands:  sudo iptables -F        # Flush old rules
+                             sudo iptables-restore < firewall_rules.txt       # Apply new rules
+
+
+To verify:
+Run in terminal:
+sudo iptables -L -v
+These rules:
+
+Allow: SSH (22), HTTP (80), HTTPS (443), DNS (53)
+
+Deny: All other inbound traffic
+
+Log: Dropped packets
+
+Step 4: Set Up Monitoring Tools
+Run the script monitoring_setup.sh:
+
+Run in terminal:
+chmod +x monitoring_setup.sh
+./monitoring_setup.sh
+
+
+This installs: iftop → Real-time traffic monitor (CLI-based)
+
+Netdata → Web-based live system and network monitor
+
+Step 5: Use the Monitoring Tools
+Netdata
+Open your browser and go to: arduino
+http://localhost:19999
+iftop
+Run in terminal: sudo iftop
+
+Step 6: Test Network Security
+Use another system or virtual machine to try accessing restricted ports (e.g., FTP, Telnet) on this machine.
+
+Check if firewall logs those packets using:
+sudo tail -f /var/log/syslog
